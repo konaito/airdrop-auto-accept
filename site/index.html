@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07162f">
+  <meta name="description" content="AndroidのQuick ShareからMacへ届くファイルを自動で受け入れるmacOSユーティリティ。">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b2b62'/%3E%3Cpath d='M32 12v26m0 0 12-12m-12 12L20 26' fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='7'/%3E%3Cpath d='M14 48h36' stroke='%234fe7ff' stroke-linecap='round' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <title>AirDrop Auto Accept — Quick ShareをDownloadsへ</title>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="nav shell">
+    <a class="brand" href="./">
+      <img src="./app-icon.png" alt="" width="36" height="36">
+      <span>AirDrop Auto Accept</span>
+    </a>
+    <a class="nav-link" href="https://github.com/konaito/airdrop-auto-accept">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> macOS utility / v0.1.0</p>
+        <h1>Quick Shareの受信を、<strong>ひと手間減らす。</strong></h1>
+        <p class="lede">AndroidからMacへ送ったファイルを、画面を見張って自動で受け入れ。写真だけでなく、動画・PDF・ZIPなどすべてのファイルに対応します。</p>
+        <div class="actions">
+          <a class="button button-primary" href="./downloads/AirDropAutoAccept.dmg" download>
+            DMGをダウンロード <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button button-quiet" href="https://github.com/konaito/airdrop-auto-accept">ソースコード <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="meta-line"><span>macOS 13+</span><i></i><span>Apple Silicon / Intel</span><i></i><span>MIT License</span></p>
+      </div>
+
+      <div class="hero-visual" aria-label="受信してDownloadsへ保存するイメージ">
+        <div class="visual-glow"></div>
+        <div class="visual-ring ring-one"></div>
+        <div class="visual-ring ring-two"></div>
+        <div class="transfer-card">
+          <div class="transfer-top"><span class="live-dot"></span><span>受信を監視中</span><span class="card-time">now</span></div>
+          <div class="transfer-body">
+            <img src="./app-icon.png" alt="" width="74" height="74">
+            <div><p class="transfer-label">Quick Share</p><p class="transfer-title">Pixel 10 Pro Fold</p><p class="transfer-sub">ファイルを受け入れました</p></div>
+          </div>
+          <div class="progress"><span></span></div>
+          <div class="transfer-foot"><span>Downloads</span><span>完了</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof shell" aria-label="特徴">
+      <div><span class="proof-number">01</span><strong>全ファイル対応</strong><small>写真・動画・PDF・ZIP</small></div>
+      <div><span class="proof-number">02</span><strong>送信元を限定</strong><small>指定デバイスだけを処理</small></div>
+      <div><span class="proof-number">03</span><strong>Downloadsへ</strong><small>macOS標準の保存先を利用</small></div>
+    </section>
+
+    <section class="how shell">
+      <div class="section-kicker">HOW IT WORKS</div>
+      <div class="section-heading"><h2>一度許可すれば、<br><em>あとはいつも通り。</em></h2><p>OSのAirDropプロトコルに直接触れず、macOSに表示される受信UIだけを操作します。</p></div>
+      <div class="steps">
+        <article><span>01</span><h3>アプリを入れる</h3><p>DMGを開き、アプリケーションフォルダへ移動します。</p></article>
+        <article><span>02</span><h3>一度だけ許可</h3><p>アクセシビリティ設定でAirDrop Auto Acceptを有効にします。</p></article>
+        <article><span>03</span><h3>送るだけ</h3><p>AndroidからQuick Share。受信したファイルはDownloadsへ保存されます。</p></article>
+      </div>
+    </section>
+
+    <section class="download shell" id="download">
+      <div class="download-panel">
+        <div><p class="section-kicker">READY WHEN YOU ARE</p><h2>Macへの受信を、<br>もっと軽く。</h2><p>最新ビルドをダウンロードして、Quick Shareの受信を試してみてください。</p></div>
+        <a class="button button-primary" href="./downloads/AirDropAutoAccept.dmg" download>AirDropAutoAccept.dmg <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="install-note"><span aria-hidden="true">ⓘ</span><span><strong>初回起動について</strong><br>このDMGは未公証の個人ビルドです。macOSの警告が出た場合は、内容を確認したうえでFinderから右クリックして「開く」を選んでください。動作にはアクセシビリティ許可が必要です。</span></p>
+    </section>
+  </main>
+
+  <footer class="footer shell"><span>AirDrop Auto Accept</span><span>Built for a calmer desktop.</span><a href="https://github.com/konaito/airdrop-auto-accept">GitHub ↗</a></footer>
+</body>
+</html>
