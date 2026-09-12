@@ -49,3 +49,7 @@ Accessibility APIで取得できるUI構造はmacOSのバージョンや通知�
 ## ライセンス
 
 MIT License。詳細は [`LICENSE`](LICENSE) を参照してください。
+
+## コントリビュート
+
+変更を送る前に `./build.sh` と `plutil -lint Info.plist` を実行し、Accessibility権限を付与した実機で動作を確認してください。UI検出を変更した場合は、送信元名とファイル種別、macOSのバージョン、Downloadsへの保存結果をPRに記載してください。
