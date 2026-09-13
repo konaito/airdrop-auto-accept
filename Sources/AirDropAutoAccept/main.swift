@@ -1,5 +1,6 @@
 import AppKit
 import ApplicationServices
+import CoreGraphics
 import Foundation
 import OSLog
 
@@ -120,14 +121,13 @@ final class AirDropController {
 
                 lastObservedSignature = signature
                 lastActionAt = Date()
-                let result = AXUIElementPerformAction(acceptButton, kAXPressAction as CFString)
-                if result == .success {
-                    logger.notice("accepted AirDrop request in app=\(application.localizedName ?? "unknown", privacy: .public)")
+                if pressAcceptControl(acceptButton) {
+                    logger.notice("sent accept action for AirDrop request in app=\(application.localizedName ?? "unknown", privacy: .public)")
                     pendingDownloadsChoiceUntil = Date().addingTimeInterval(4)
                     publish("受け入れメニューを開きました")
                 } else {
-                    logger.error("accept action failed: result=\(result.rawValue, privacy: .public) app=\(application.localizedName ?? "unknown", privacy: .public)")
-                    publish("受け入れ操作に失敗: \(result.rawValue)")
+                    logger.error("accept action failed in app=\(application.localizedName ?? "unknown", privacy: .public)")
+                    publish("受け入れ操作に失敗")
                 }
                 return
             }
@@ -203,6 +203,66 @@ final class AirDropController {
                 normalized.localizedCaseInsensitiveCompare($0) == .orderedSame
             }
         }
+    }
+
+    private func pressAcceptControl(_ element: AXUIElement) -> Bool {
+        let role = attribute(element, kAXRoleAttribute) as? String
+        if role == kAXMenuButtonRole || role == kAXPopUpButtonRole {
+            // AirDrop renders the primary "Accept" action as a menu button.
+            // AXPress on that element can only open the menu from a background
+            // process, so click the primary area to the left of the arrow.
+            if clickPrimaryArea(of: element) {
+                return true
+            }
+        }
+
+        return AXUIElementPerformAction(element, kAXPressAction as CFString) == .success
+    }
+
+    private func clickPrimaryArea(of element: AXUIElement) -> Bool {
+        var positionValue: CFTypeRef?
+        var sizeValue: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXPositionAttribute as CFString, &positionValue) == .success,
+              AXUIElementCopyAttributeValue(element, kAXSizeAttribute as CFString, &sizeValue) == .success,
+              let positionValue,
+              let sizeValue,
+              CFGetTypeID(positionValue) == AXValueGetTypeID(),
+              CFGetTypeID(sizeValue) == AXValueGetTypeID() else {
+            return false
+        }
+
+        let positionAXValue = positionValue as! AXValue
+        let sizeAXValue = sizeValue as! AXValue
+        var position = CGPoint.zero
+        var size = CGSize.zero
+        guard AXValueGetValue(positionAXValue, .cgPoint, &position),
+              AXValueGetValue(sizeAXValue, .cgSize, &size),
+              size.width > 16,
+              size.height > 8 else {
+            return false
+        }
+
+        let clickPoint = CGPoint(
+            x: position.x + min(max(size.width * 0.25, 8), size.width - 8),
+            y: position.y + size.height / 2
+        )
+        guard let mouseDown = CGEvent(
+            mouseEventSource: nil,
+            mouseType: .leftMouseDown,
+            mouseCursorPosition: clickPoint,
+            mouseButton: .left
+        ), let mouseUp = CGEvent(
+            mouseEventSource: nil,
+            mouseType: .leftMouseUp,
+            mouseCursorPosition: clickPoint,
+            mouseButton: .left
+        ) else {
+            return false
+        }
+
+        mouseDown.post(tap: .cghidEventTap)
+        mouseUp.post(tap: .cghidEventTap)
+        return true
     }
 
     private func chooseDownloadsIfVisible() -> Bool {
