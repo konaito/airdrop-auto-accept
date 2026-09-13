@@ -32,6 +32,10 @@ open ../../outputs/AirDropAutoAccept.app
 
 `--status` はAccessibility権限を `granted` または `not-granted` で表示します。
 
+## ダウンロード
+
+公開LPは [konaito.github.io/airdrop-auto-accept](https://konaito.github.io/airdrop-auto-accept/) です。直接ダウンロードする場合は [AirDropAutoAccept.dmg](https://konaito.github.io/airdrop-auto-accept/downloads/AirDropAutoAccept.dmg) を使ってください。現在のDMGはDeveloper ID署名済みで、Apple公証済みです。
+
 ## 設定
 
 送信元名はUserDefaultsで変更できます。
