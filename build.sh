@@ -21,17 +21,16 @@ cp "$PROJECT_DIR/Assets/AirDropAutoAccept.icns" "$RESOURCES_DIR/AirDropAutoAccep
 
 chmod +x "$MACOS_DIR/AirDropAutoAccept"
 
-# Prefer a stable Developer ID requirement when one is available. TCC's
-# Accessibility grant is otherwise tied to each ad-hoc build's code hash and
-# gets invalidated whenever the app is rebuilt.
+# A stable Developer ID signature keeps the Accessibility grant attached to
+# this app across rebuilds. Never silently fall back to an ad-hoc signature:
+# that would recreate the Gatekeeper warning users see with downloaded builds.
 SIGNING_IDENTITY="$(security find-identity -v -p codesigning 2>/dev/null \
     | awk -F'"' '/Developer ID Application:/{print $2; exit}')"
-if [[ -n "$SIGNING_IDENTITY" ]]; then
-    if ! codesign --force --deep --sign "$SIGNING_IDENTITY" "$APP_DIR" >/dev/null 2>&1; then
-        echo "Developer ID signing unavailable; using an ad-hoc local signature." >&2
-        codesign --force --deep --sign - "$APP_DIR" >/dev/null
-    fi
-else
-    codesign --force --deep --sign - "$APP_DIR" >/dev/null
+if [[ -z "$SIGNING_IDENTITY" ]]; then
+    echo "Developer ID Application certificate not found; refusing to create an unsigned distribution build." >&2
+    exit 1
 fi
+codesign --force --deep --options runtime --timestamp \
+    --sign "$SIGNING_IDENTITY" "$APP_DIR"
+codesign --verify --deep --strict "$APP_DIR"
 echo "Built: $APP_DIR"

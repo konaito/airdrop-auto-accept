@@ -34,7 +34,7 @@ open ../../outputs/AirDropAutoAccept.app
 
 ## ダウンロード
 
-公開LPは [konaito.github.io/airdrop-auto-accept](https://konaito.github.io/airdrop-auto-accept/) です。直接ダウンロードする場合は [AirDropAutoAccept.dmg](https://konaito.github.io/airdrop-auto-accept/downloads/AirDropAutoAccept.dmg) を使ってください。現在のDMGは未公証の個人ビルドです。
+公開LPは [konaito.github.io/airdrop-auto-accept](https://konaito.github.io/airdrop-auto-accept/) です。直接ダウンロードする場合は [AirDropAutoAccept.dmg](https://konaito.github.io/airdrop-auto-accept/downloads/AirDropAutoAccept.dmg) を使ってください。現在のDMGはDeveloper ID署名済みですが、Apple公証前の個人ビルドです。
 
 ## 設定
 
